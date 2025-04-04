@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NetBill Pro - Customer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 205px;
+            background-color: #121212;
+            color: #b1b1b1;
+            height: 100vh;
+            padding-top: 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+        }
+        .logout-button {
+            color: aliceblue; }
+
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+            color: #f39c12;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #b1b1b1;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .menu-item:hover {
+            background-color: #2c2f3b;
+            color: #ffffff;
+        }
+        
+        .menu-item.active {
+            background-color: #3e4451;
+            color: white;
+            border-left: 4px solid #f39c12;
+        }
+
+        .content {
+            margin-left: 205px;
+            width: calc(100% - 205px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: #ffffff;
+            border: 1px solid #34495e; 
+            box-shadow: 1px 1px 10px #2c3e50; 
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #ecf0f1;
+        }
+
+        .table-container {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #ecf0f1;
+            font-weight: bold;
+        }
+
+        .status-unpaid {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .status-paid {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .action-button {
+            cursor: pointer;
+            font-size: 18px;
+            color: #f39c12;
+            transition: color 0.3s;
+        }
+
+        .action-button:hover {
+            color: #e67e22; 
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">NetBill Pro</div>
+        <a href="page2.html" class="menu-item active ">Dashboard</a>
+        <a href="page3.html" class="menu-item">Customer</a>
+        <a href="page4.html" class="menu-item">Clustering</a>
+        <a href="page5.html" class="menu-item">Coverage</a>
+        <a href=" " class="menu-item">Internet packages</a>
+        <a href=" " class="menu-item">Router</a>
+        <a href=" " class="menu-item">Inventory</a>
+        <a href=" " class="menu-item">Bill</a>
+        <a href=" " class="menu-item">Cash flow</a>
+        <a href=" " class="menu-item">Report</a>
+    </div>
+    <div class="content">
+        <div class="header">
+            <h1>Dashboard</h1>
+        <a href="index.html" class="logout-button">Log-out</a>
+        </div>
+
+</body>
+</html>
