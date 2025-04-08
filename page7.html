@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NetBill Pro - Router Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 205px;
+            background-color: #121212;
+            color: #b1b1b1;
+            height: 100vh;
+            padding-top: 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+            color: #f39c12;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #b1b1b1;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .menu-item:hover {
+            background-color: #2c2f3b;
+            color: #ffffff;
+        }
+        
+        .menu-item.active {
+            background-color: #3e4451;
+            color: white;
+            border-left: 4px solid #f39c12;
+        }
+
+        .content {
+            margin-left: 205px;
+            width: calc(100% - 205px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: #ffffff;
+            border: 1px solid #34495e; 
+            box-shadow: 1px 1px 10px #2c3e50; 
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #ecf0f1;
+        }
+
+        .logout-button {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .logout-button:hover {
+            color: #e74c3c;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background-color: #34495e;
+            align-items: center;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            width: 300px;
+        }
+
+        .filter-select {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-button, .export-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .add-button {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .export-button {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .table-container {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #2c3e50;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            color: #ecf0f1;
+            border-bottom: 1px solid #34495e;
+        }
+
+        th {
+            background-color: #34495e;
+            font-weight: bold;
+        }
+
+        .router-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            width: 80px;
+            text-align: center;
+        }
+
+        .status-active {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .status-offline {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .status-maintenance {
+            background-color: rgba(241, 196, 15, 0.2);
+            color: #f1c40f;
+        }
+
+        .action-icon {
+            cursor: pointer;
+            color: #f39c12;
+            font-size: 18px;
+            margin: 0 5px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px;
+            gap: 5px;
+        }
+
+        .page-button {
+            padding: 5px 10px;
+            border: 1px solid #34495e;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            cursor: pointer;
+        }
+
+        .page-button.active {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1 class="logo">NetBill Pro</h1>
+        <a href="page2.html" class="menu-item active">Dashboard</a>
+        <a href="page3.html" class="menu-item">Customer</a>
+        <a href="page4.html" class="menu-item">Clustering</a>
+        <a href="page5.html" class="menu-item">Coverage</a>
+        <a href="page6.html" class="menu-item">Internet packages</a>
+        <a href="page7.html" class="menu-item">Router</a>
+        <a href="page8.html" class="menu-item">Inventory</a>
+        <a href="page9.html" class="menu-item">Bill</a>
+        <a href="" class="menu-item">Cash flow</a>
+        <a href="#" class="menu-item">Report</a>
+    </div>
+    
+    <div class="content">
+        <div class="header">
+            <h1>Router Management</h1>
+            <a href="index.html" class="logout-button">Log-out</a>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search routers...">
+                <select class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="offline">Offline</option>
+                    <option value="maintenance">Maintenance</option>
+                </select>
+            </div>
+            <div class="action-buttons">
+                <button class="add-button">+ Add Router</button>
+                <button class="export-button">Export</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>ID</th>
+                        <th>Model</th>
+                        <th>MAC Address</th>
+                        <th>IP Address</th>
+                        <th>Location</th>
+                        <th>Customer</th>
+                        <th>Status</th>
+                        <th>Last Seen</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>RT001</td>
+                        <td>TP-Link Archer AX50</td>
+                        <td>E4:8D:8C:FB:03:12</td>
+                        <td>192.168.1.1</td>
+                        <td>Cluster A</td>
+                        <td>John Ashley Gervacio</td>
+                        <td><span class="router-status status-active">Active</span></td>
+                        <td>Just now</td>
+                        <td>
+                            <span class="action-icon">📝</span>
+                            <span class="action-icon">🔄</span>
+                            <span class="action-icon">❌</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>RT002</td>
+                        <td>TP-Link Archer AX50</td>
+                        <td>A8:57:4E:2B:E9:F3</td>
+                        <td>192.168.0.254</td>
+                        <td>Cluster B</td>
+                        <td>Alwin Lazaro</td>
+                        <td><span class="router-status status-active">Active</span></td>
+                        <td>5 mins ago</td>
+                        <td>
+                            <span class="action-icon">📝</span>
+                            <span class="action-icon">🔄</span>
+                            <span class="action-icon">❌</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>RT003</td>
+                        <td>TP-Link Archer AX50</td>
+                        <td>E4:8D:8C:FB:17:54</td>
+                        <td>192.168.1.105</td>
+                        <td>Cluster A</td>
+                        <td>Nichole Ashley Pica</td>
+                        <td><span class="router-status status-offline">Offline</span></td>
+                        <td>2 days ago</td>
+                        <td>
+                            <span class="action-icon">📝</span>
+                            <span class="action-icon">🔄</span>
+                            <span class="action-icon">❌</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>RT004</td>
+                        <td>TP-Link Archer AX50</td>
+                        <td>BC:EE:7B:8A:97:21</td>
+                        <td>192.168.2.1</td>
+                        <td>Cluster C</td>
+                        <td>Sachi Kirigaya</td>
+                        <td><span class="router-status status-maintenance">Maintenance</span></td>
+                        <td>1 hour ago</td>
+                        <td>
+                            <span class="action-icon">📝</span>
+                            <span class="action-icon">🔄</span>
+                            <span class="action-icon">❌</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>RT005</td>
+                        <td>TP-Link Archer AX50</td>
+                        <td>F4:6D:04:12:C5:E8</td>
+                        <td>192.168.3.1</td>
+                        <td>Cluster B</td>
+                        <td>Trisha Mae Castillo</td>
+                        <td><span class="router-status status-active">Active</span></td>
+                        <td>30 mins ago</td>
+                        <td>
+                            <span class="action-icon">📝</span>
+                            <span class="action-icon">🔄</span>
+                            <span class="action-icon">❌</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button class="page-button">«</button>
+            <button class="page-button active">1</button>
+            <button class="page-button">2</button>
+            <button class="page-button">3</button>
+            <button class="page-button">»</button>
+        </div>
+    </div>
+</body>
+</html>
